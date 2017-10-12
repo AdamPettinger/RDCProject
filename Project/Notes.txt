@@ -1,0 +1,10 @@
+Each joint can be represented by a DH matrix: A = R * T * T * R. But the first R changes based on the input angle.
+
+So instead, each joint should be represented as a constant matrix L = T * T * R, and to get the joint at a specific angle, you pre-multiple by R: A = R * L. Where the pre-multiplied R is just cos’s and sin’s of the input angle.
+
+To get the position of the second joint, you have to do P = R0*L0 * R1*L1. This should give you a 4x4 describing the rotations and translations.
+
+
+
+https://www.youtube.com/watch?v=rA9tm0gTln8
+
