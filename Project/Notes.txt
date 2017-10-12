@@ -7,5 +7,7 @@ To get the position of the second joint, you have to do P = R0*L0 * R1*L1. This 
 
 The entire arm will be represented by a 3D matrix that is 4x4xn where n in the number of joints/links.
 
+To find the link geometries: find the distance between joint i and i+1 (in global frame). Do the dot product with this and joint i’s x-axis to get the projection along the x-axis. Take the location of joint i, and add the x-axis vector * the dot product to it to get the a new point - the x-distance between i and i+1. Take this point and add the y-axis vector * the dot(y-axis, distance) to get the y-distance. Repeat for z.
+
 https://www.youtube.com/watch?v=rA9tm0gTln8
 

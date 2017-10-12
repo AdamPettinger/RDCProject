@@ -7,7 +7,12 @@ function [P] = getPosN(R, pos, n)
 % pos is a vector of actuator angles
 % n is which joint you would like to return (6 is the end effector)
 
-P = R(:,:,1);
+Rot = [cos(pos(1)), -1*sin(pos(1)), 0, 0;
+         sin(pos(1)), cos(pos(1)), 0, 0;
+         0, 0, 1, 0;
+         0, 0, 0, 1];
+     
+P = Rot * R(:,:,1);
 
 if (n==1)
     return;

@@ -7,7 +7,13 @@ function [P] = getPos(R, pos)
 % pos is a vector of actuator angles
 
 P = zeros(size(R));
-P(:,:,1) = R(:,:,1);
+
+Rot = [cos(pos(1)), -1*sin(pos(1)), 0, 0;
+         sin(pos(1)), cos(pos(1)), 0, 0;
+         0, 0, 1, 0;
+         0, 0, 0, 1];
+     
+P(:,:,1) = Rot * R(:,:,1);
 
 for i=2:length(R)
     % Caclulate the rotation due do the motor actuation
