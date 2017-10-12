@@ -5,6 +5,7 @@ So instead, each joint should be represented as a constant matrix L = T * T * R,
 To get the position of the second joint, you have to do P = R0*L0 * R1*L1. This should give you a 4x4 describing the rotations and translations.
 
 
+The entire arm will be represented by a 3D matrix that is 4x4xn where n in the number of joints/links.
 
 https://www.youtube.com/watch?v=rA9tm0gTln8
 
