@@ -21,6 +21,7 @@ for i=1:length(Rl)
         m = m + 3;
     end
 end
+disp('m'); disp(m);
 
 % Initialize the arrays
 points = zeros(3, m+1);
@@ -82,6 +83,9 @@ for i=2:6
         cc = cc + 3;
     end
 end
+
+disp('pc'); disp(pc);
+disp('cc'); disp(cc);
 
 points(:,pc) = P(1:3,4,7);
 color(cc) = 'k';

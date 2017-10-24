@@ -1,0 +1,18 @@
+function [points] = calcFramePoints(P)
+% Calculates the points for drawing joint axes
+
+% P is a 4x4x6 double thats the DH params for each joint
+
+% points is a 3x4xn matrix of points where n = number of joints + EE
+
+% Initialize the arrays
+s = size(P);
+points = zeros(3,4,s(3));
+
+for i=2:6
+    
+end
+
+end
+
+

@@ -17,7 +17,7 @@ L(:,:,3) = addLink(0.3, 0, false, false, t3);
 L(:,:,4) = addBracket(true, true, t4);
 L(:,:,5) = addLink(0.25, 0, true, false, t5);
 L(:,:,6) = addBracket(true, true, t6);
-L(:,:,7) = addEE(0,0,0.4);
+L(:,:,7) = addEE(0,0,0.04);
 
 
 pos = [0, 0, 0, 0, 0, 0];
@@ -30,15 +30,16 @@ P = getPos(L, pos, t1,t2,t3,t4,t5,t6);
 
 [p, c] = calcDrawPoints(P, Rl, b);
 testing = drawLines(p,c);
+f = calcFramePoints(P);
+testing2 = drawFrames(f);
+
 view(3);
 grid on;
 axis([0 1 -0.5 0.5 -0.5 0.5]);
 xlabel('x'); ylabel('y'); zlabel('z');
 
 % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ NEXT STEPS ~~~~~~~~~~~~~~~~~~~~~~~
-% Draw circles at the motor joints (where red lines meet blue lines)
-% Create a DH for an End Effector and tack that onto L (make L 4x4x7)
-% Draw lines or vectors to represent the axes of the end effector
+% Convert from line objects to plot3() and drawnow
 % Work on the 2x2 subplot with the iso and top/side/front views
 
 % t = 1:15;

@@ -11,13 +11,13 @@ lines = gobjects([1,length(G)-1]);
 
 for i=1:length(color)
     if (color(i) == 'r')
-        lines(i) = line([G(1,i), G(1,i+1)], [G(2,i), G(2,i+1)], [G(3,i), G(3,i+1)], 'color', 'red');
+        lines(i) = line([G(1,i), G(1,i+1)], [G(2,i), G(2,i+1)], [G(3,i), G(3,i+1)], 'color', 'red', 'linewidth', 1);
     elseif (color(i) == 'b')
-        lines(i) = line([G(1,i), G(1,i+1)], [G(2,i), G(2,i+1)], [G(3,i), G(3,i+1)], 'color', 'blue');
+        lines(i) = line([G(1,i), G(1,i+1)], [G(2,i), G(2,i+1)], [G(3,i), G(3,i+1)], 'color', 'blue', 'linewidth', 3);
     elseif (color(i) == 'g')
-        lines(i) = line([G(1,i), G(1,i+1)], [G(2,i), G(2,i+1)], [G(3,i), G(3,i+1)], 'color', 'green');
+        lines(i) = line([G(1,i), G(1,i+1)], [G(2,i), G(2,i+1)], [G(3,i), G(3,i+1)], 'color', 'green', 'linewidth', 1);
     else
-        lines(i) = line([G(1,i), G(1,i+1)], [G(2,i), G(2,i+1)], [G(3,i), G(3,i+1)], 'color', 'black');
+        lines(i) = line([G(1,i), G(1,i+1)], [G(2,i), G(2,i+1)], [G(3,i), G(3,i+1)], 'color', 'black', 'linewidth', 3);
     end
                
 end
