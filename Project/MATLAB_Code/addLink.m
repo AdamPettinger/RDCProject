@@ -1,4 +1,4 @@
-function [L] = addLink(l, angle, x5, EE)
+function [L] = addLink(l, angle, x5, EE, theta)
 % This outputs the L = T * T * R matrix for a joint with a link (tube)
 % l is the length of the pipe (from motor-center to motor-center)
 % angle is the rotational offset (twist) of the link
@@ -36,5 +36,11 @@ R = [1,0,0,0;
      0,sin(angle),cos(angle),0;
      0,0,0,1]; 
  
-L = T1 * T2 * R;
+
+Rot = [cos(theta), -1*sin(theta), 0, 0;
+         sin(theta), cos(theta), 0, 0;
+         0, 0, 1, 0;
+         0, 0, 0, 1];
+     
+L = Rot * T1 * T2 * R;
 end

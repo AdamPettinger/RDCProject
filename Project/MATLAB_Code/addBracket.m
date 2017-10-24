@@ -1,4 +1,4 @@
-function [L] = addBracket(x5, light)
+function [L] = addBracket(x5, light, theta)
 % This outputs the L = T * T * R matrix for a joint with a 90 degree bracket
 % There are two options: a light bracket and a heavy bracket. 'light'
 % handles this
@@ -34,7 +34,7 @@ if(light)
           0,0,1,0;
           0,0,0,1];
 else
-    T2 = [1,0,0,0.375; 
+    T2 = [1,0,0,0.0375; 
           0,1,0,0; 
           0,0,1,0;
           0,0,0,1];
@@ -49,5 +49,10 @@ R = [1,0,0,0;
      0,-1,0,0;
      0,0,0,1]; 
  
-L = T1 * T2 * R;
+Rot = [cos(theta), -1*sin(theta), 0, 0;
+         sin(theta), cos(theta), 0, 0;
+         0, 0, 1, 0;
+         0, 0, 0, 1];
+ 
+L = Rot * T1 * T2 * R;
 end
