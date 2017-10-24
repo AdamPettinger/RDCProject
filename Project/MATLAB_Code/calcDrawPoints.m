@@ -1,53 +1,90 @@
-function [points, color] = calcDrawPoints(P, Rl)
+function [points, color] = calcDrawPoints(P, Rl, bracket)
 % Calculates the points for drawing lines to represent the robot
 % The robot will be drawn as a series of lines
 % The first line will be from the first point to the second point, etc
 
 % P is a 4x4x6 double thats the DH params for each joint
 % Rl is a 1x6 bool array that decribes links vs brackets
+% bracket is a 1x6 bool array. For bracket links, 'true' = light brackets
+% (vs heavy). For tube links, 'true' = x5 motor (vs x8)
 
-% points is a 3xn matrix of points where n = fn(number of joints)
+% points is a 3xn matrix of points where n = fn(number of joints, type of joints)
 % color is a 1xm char array where m = n-1. Each char represents a color to
 % draw the line as. 'r' for red, 'b' for blue, 'g' for green
 
-% Initialize the arrays (first point is [0,0,0]')
-points = zeros(3, 12);
-color = strings(1,11);
+% Calculate how many links there are
+m = 1;
+for i=1:length(Rl)
+    if(Rl(i))
+        m = m + 2;
+    else
+        m = m + 3;
+    end
+end
 
-color(1) = 'g';
-points(1:3, 2) = P(1:3,4,1);
-pi = 3; ci= 2;
+% Initialize the arrays
+points = zeros(3, m+1);
+color = char(1,m);
 
-for i=1:5
+% Set the first point as the origin
+points(1:3, 1) = [0,0,0]';
+%points(1:3, 1) = P(1:3,4,1);
+
+% Create counter variables to track which point and color we are filling out
+pc = 2; cc= 1;
+
+for i=2:6
     if(Rl(i))
         % this link is a tube
         % Get the z axis for this link
-        z = P(1:3,3,i);
+        z = P(1:3,3,i-1);
         % Get the vector for this link
-        d = P(1:3,4,i+1) - P(1:3,4,i);
+        d = P(1:3,4,i) - P(1:3,4,i-1);
         % Find the projection of the vector onto the z axis
         c = dot(z,d);
+        % Need to add two points for this link: 1 between motor output and
+        % next motor input, and 1 at the next motor output (to account for
+        % motor thickness)
+        points(:,pc+1) = P(1:3,4,i);
         % The intermediate point is on the z-axis, scaled to the projection
-        points(:,2*i+1) = points(:,2*i) + z.*c;
-        color(2*i) = 'b';
-        color(2*i + 1) = 'r';
+        points(:,pc) = points(:,pc+1) - z.*c;
+        color(cc) = 'b';
+        color(cc+1) = 'r';
+        pc = pc + 2;
+        cc = cc + 2;
     else
         % this link is a bracket
-        % Get the x axis for this link
-        x = P(1:3,1,i);
-        % Get the vector for this link
-        d = P(1:3,4,i+1) - P(1:3,4,i);
-        % Find the projection of the vector onto the z axis
-        c = dot(x,d);
-        % The intermediate point is on the z-axis, scaled to the projection
-        points(:,2*i+1) = points(:,2*i) + x.*c;
-        color(2*i) = 'b';
-        color(2*i + 1) = 'g';
+        % Get the y axis for this link
+        y = P(1:3,2,i-1);
+        % Get the z axis for this link
+        z = P(1:3,3,i-1);
+        % The first intermediate point is along the y-axis by the amount
+        % just due to the bracket
+        if(bracket(i))
+            points(:,pc) = points(:,pc-1) + y.*(0.043);
+        else
+            points(:,pc) = points(:,pc-1) + y.*(0.0375);
+        end
+        % The second intermediate point is along the z-axis by the amount
+        % just due to the bracket
+        if(bracket(i))
+            points(:,pc+1) = points(:,pc) + z.*(0.040);
+        else
+            points(:,pc+1) = points(:,pc) + z.*(0.055);
+        end
+        % The next point is just the origin of the next joint
+        points(:,pc+2) = P(1:3,4,i);
+        
+        color(cc) = 'b';
+        color(cc+1) = 'g';
+        color(cc+2) = 'r';
+        pc = pc + 3;
+        cc = cc + 3;
     end
-    
-    % The next point will be the next joint's origin
-    points(:, 2*i+2) = P(1:3,4,i+1);
 end
+
+% points(:,end) = P(1:3,4,7);
+% color(end) = 'k';
 
 end
 

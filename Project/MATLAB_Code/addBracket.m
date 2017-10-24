@@ -8,18 +8,11 @@ function [L] = addBracket(x5, light, theta)
 % Note: this is the transformation between the input to the motor
 % (described by x5 input) and to where the next motor attaches.
 
-% T1 is the z-axis offset. This depends on the motor type and the bracket
-% type
+% T1 is the z-axis offset. Dependant on the bracket
 T1 = [1,0,0,0; 
       0,1,0,0; 
       0,0,1,0;
       0,0,0,1];
-
-if(x5)
-    T1(3,4) = T1(3,4) + 0.0311;
-else
-    T1(3,4) = T1(3,4) + 0.0451;
-end
 
 if(light)
     T1(3,4) = T1(3,4) + 0.040;
@@ -27,17 +20,24 @@ else
     T1(3,4) = T1(3,4) + 0.055;
 end
 
-% T2 is the radius, dependant on the bracket
+% T2 is the radius, this depends on the motor type and the bracket
+% type
 if(light)
-    T2 = [1,0,0,0.043; 
-          0,1,0,0; 
+    T2 = [1,0,0,0; 
+          0,1,0,0.043; 
           0,0,1,0;
           0,0,0,1];
 else
-    T2 = [1,0,0,0.0375; 
-          0,1,0,0; 
+    T2 = [1,0,0,0; 
+          0,1,0,0.0375; 
           0,0,1,0;
           0,0,0,1];
+end
+
+if(x5)
+    T2(2,4) = T2(2,4) + 0.0311;
+else
+    T2(2,4) = T2(2,4) + 0.0451;
 end
 
   
