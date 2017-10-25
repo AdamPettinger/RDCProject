@@ -56,7 +56,8 @@ for i=1:length(t)
 end
 %% 
 xmin = 0; xmax = 0.75; ymin = -0.5; ymax = 0.5; zmin = -0.5; zmax = 0.5;
-figure('units','normalized','outerposition',[0 0 1 1]);
+figure();
+pause(1);
 for i=1:length(t)
     subplot(2,2,4)
         grid on; hold off;
@@ -72,7 +73,7 @@ for i=1:length(t)
         grid on; hold off;
         view([0 90])
         jointsz = drawLines(p3,c3);
-%         framesz = drawFrames(f3);
+        framesz = drawFrames(f3);
         xlabel('x'); ylabel('y');
         title('Top View');
         axis([xmin xmax ymin ymax]);
@@ -81,7 +82,7 @@ for i=1:length(t)
         grid on; hold off;
         view([0 0])
         jointsx = drawLines(p3,c3);
-%         framesx = drawFrames(f3);
+        framesx = drawFrames(f3);
         xlabel('x'); ylabel('y'); zlabel('z');
         title('Side View');
         axis([xmin xmax ymin ymax zmin zmax]);
@@ -90,20 +91,20 @@ for i=1:length(t)
         grid on; hold off;
         view([90 0])
         jointsy = drawLines(p3,c3);
-%         framesy = drawFrames(f3);
+        framesy = drawFrames(f3);
         xlabel('x'); ylabel('y'); zlabel('z');
         title('Front View');
         axis([xmin xmax ymin ymax zmin zmax]);
     
-    pause(0.5);
-    if(i ~= length(t))
+    pause(0.1);
+    if(i ~= length()
         delete(frames3);
         delete(joints3);
-%         delete(framesz);
+        delete(framesz);
         delete(jointsz);
-%         delete(framesy);
+        delete(framesy);
         delete(jointsy);
-%         delete(framesx);
+        delete(framesx);
         delete(jointsx);
     end
 end
